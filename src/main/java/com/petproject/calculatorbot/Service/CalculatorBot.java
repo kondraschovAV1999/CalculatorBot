@@ -46,12 +46,11 @@ public class CalculatorBot extends TelegramLongPollingBot {
                 update.getMessage().getChatId(),
                 new CalculatorVisitor(functions.getFunctions()));
 
-        new EventHandler(
+        new Thread(new EventHandler(
                 update,
                 this,
                 visitorMap.get(update.getMessage().getChatId()),
-                new MessageParser())
-                .run();
+                new MessageParser())).start();
     }
 
     public void sendMassage(long chatId, String text) {

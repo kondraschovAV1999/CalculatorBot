@@ -28,7 +28,7 @@ public class CalculatorVisitor extends arithmeticBaseVisitor<Double> {
     @Override
     public Double visitProg(arithmeticParser.ProgContext ctx) {
         ctx.equation().forEach(this::visit);
-        return visit(ctx.expression());
+        return ctx.expression() != null ? visit(ctx.expression()) : 0;
     }
 
     @Override

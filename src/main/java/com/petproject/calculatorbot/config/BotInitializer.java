@@ -25,7 +25,5 @@ public class BotInitializer {
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }

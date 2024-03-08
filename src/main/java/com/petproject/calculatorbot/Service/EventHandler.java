@@ -9,13 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 @AllArgsConstructor
 @Slf4j
 public class EventHandler implements Runnable {
-
 
     private final Update update;
     private final CalculatorBot bot;
@@ -32,7 +30,7 @@ public class EventHandler implements Runnable {
                 break;
             case set_vars:
                 calculate(message.second);
-                bot.sendMassage(chatId, "Your variables were written in memory");
+                bot.sendMassage(chatId, "Your variables were written in the memory");
                 break;
             case show_vars:
                 bot.sendMassage(chatId, visitor.getMemory().toString());
@@ -46,13 +44,13 @@ public class EventHandler implements Runnable {
                                 "This bot can compute arithmetic expressions\n" +
                                 "There are some rules:\n" +
                                 "1. You have to put whitespace after each command which do something with your data \n" +
-                                "2. If you want to create your variables, just write command /setVars " +
+                                "2. If you want to create your variables, just write command /set_vars " +
                                 "and after you can write your them\n" +
                                 "3. You have to use ';' after each definition of variables\n" +
                                 "4. If you want to calculate something you just need to write command /calculate " +
                                 "and after that you can write your expression \n" +
                                 "Here are two examples:\n" +
-                                "/set_vars x=10;y=15;z=10;\n" +
+                                "/set_vars x=10; y=15; z=10;\n" +
                                 "/calculate x+y+z-5;";
                 bot.sendMassage(chatId, startingText);
                 break;
@@ -72,7 +70,7 @@ public class EventHandler implements Runnable {
             arithmeticParser parser = new arithmeticParser(new CommonTokenStream(lexer));
             return visitor.visitProg(parser.prog()).toString();
         } catch (RuntimeException e) {
-            log.warn(e.getMessage());
+            log.warn(e.getMessage() + "\nThe input expression was " + input);
             return "This expression isn't correct";
         }
     }

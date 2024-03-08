@@ -14,7 +14,7 @@ public class MessageParser implements Parser {
 
     public static void main(String[] args) {
         MessageParser parser = new MessageParser();
-        Pair<Command, String> result = parser.parse("/show_vars ");
+        Pair<Command, String> result = parser.parse("/set_vars x=10;y=15;z=10;");
         System.out.println(result.first.getText() + " " + result.second);
     }
 
@@ -30,7 +30,7 @@ public class MessageParser implements Parser {
         try {
             return Command.valueOf(inString.replace("/", ""));
         } catch (IllegalArgumentException e) {
-            log.warn(e.getMessage());
+            log.warn(e.getMessage() + "\nCommand wasn't recognized " + inString);
             return Command.unsupported;
         }
     }
